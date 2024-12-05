@@ -7,6 +7,7 @@ const ionToken = import.meta.env.VITE_ION_TOKEN;
 const imodelId = import.meta.env.VITE_IMODEL_ID;
 const changesetId = import.meta.env.VITE_CHANGESET_ID ?? "";
 const clientId = import.meta.env.VITE_AUTH_CLIENT_ID;
+const imsPrefix = import.meta.env.VITE_IMS_PREFIX ?? "";
 
 if (!ionToken || !imodelId || !clientId) {
   throw new Error("Missing required environment variables");
@@ -26,7 +27,7 @@ async function signIn(): Promise<any> {
   const redirectUri = window.location.origin;
 
   const authClient = new BrowserAuthorizationClient({
-    authority: `https://ims.bentley.com`,
+    authority: `https://${imsPrefix}ims.bentley.com`,
     clientId,
     scope: "itwin-platform",
     redirectUri,
@@ -49,7 +50,7 @@ async function getExistingExport(iModelId: string, accessToken: string, changese
     "Prefer": "return=representation"
   };
   
-  let url = `https://api.bentley.com/mesh-export/?iModelId=${iModelId}`;
+  let url = `https://${imsPrefix}api.bentley.com/mesh-export/?iModelId=${iModelId}`;
   if (changesetId !== "") {
     url += `&changesetId=${changesetId}`;
   }
