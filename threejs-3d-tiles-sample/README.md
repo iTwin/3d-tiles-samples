@@ -104,7 +104,7 @@ await authClient.handleSigninCallback();
 
 This code assumes you have set the environment variable `VITE_CLIENT_ID` to your app's client ID in an .env file at your project's root directory. It also uses the optional `VITE_IMS_PREFIX` environment variable to determine which environment to use, but sets the default to QA.
 
-Another important aspect to note is the `redirectUri` property of the auth client. This URI must be present in the redirect URIs setting where you created your app (in the same location where you got your client ID) on developer.bentley.com. For example, if you run your Vite development server on port 8080, `http://localhost:8080/` must be a redirect URI in your app's settings.
+Another important aspect to note is the `redirectUri` property of the auth client. This URI must be present in the redirect URIs setting where you created your app (in the same location where you got your client ID) on developer.bentley.com. For example, if you run your Vite development server on its default port 5173, `http://localhost:5173/` must be a redirect URI in your app's settings.
 
 In the following step you will be using the auth client to get an access token.
 
