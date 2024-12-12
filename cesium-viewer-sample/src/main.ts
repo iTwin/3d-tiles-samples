@@ -1,15 +1,16 @@
-import './style.css'
-import  {Ion, Viewer, Cesium3DTileset} from "cesium";
+import  { Ion, Viewer, Cesium3DTileset } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import { BrowserAuthorizationClient } from "@itwin/browser-authorization";
+import { getIModel3dTilesUrl } from "./iModelTiles";
+import "./style.css";
 
 const ionToken = import.meta.env.VITE_ION_TOKEN;
-const imodelId = import.meta.env.VITE_IMODEL_ID;
+const iModelId = import.meta.env.VITE_IMODEL_ID;
 const changesetId = import.meta.env.VITE_CHANGESET_ID ?? "";
 const clientId = import.meta.env.VITE_AUTH_CLIENT_ID;
 const imsPrefix = import.meta.env.VITE_IMS_PREFIX ?? "";
 
-if (!ionToken || !imodelId || !clientId) {
+if (!ionToken || !iModelId || !clientId) {
   throw new Error("Missing required environment variables");
 }
 
@@ -22,7 +23,7 @@ function setupViewer(): Viewer {
   return viewer;
 }
 
-// sign in using the browser authorization client
+// Sign in using the browser authorization client
 async function signIn(): Promise<any> {
   const redirectUri = window.location.origin;
 
@@ -39,115 +40,23 @@ async function signIn(): Promise<any> {
   return await authClient.getAccessToken();
 }
 
-// obtain an existing export for a specified imodel id if it exists
-async function getExistingExport(iModelId: string, accessToken: string, changesetId: string) {
-  console.log("Get Existing Export");
-  
-  const headers = {
-    "Authorization": accessToken,
-    "Accept": "application/vnd.bentley.itwin-platform.v1+json",
-    "Content-Type": "application/json",
-    "Prefer": "return=representation"
-  };
-  
-  let url = `https://${imsPrefix}api.bentley.com/mesh-export/?iModelId=${iModelId}`;
-  if (changesetId !== "") {
-    url += `&changesetId=${changesetId}`;
-  }
-  try {
-    const response = await fetch(url, {headers});
-    const result = await response.json();
-    const existingExport = result.exports.find((exp: any) => ((exp.request.exportType === "CESIUM") && (exp.status === "Complete")));
-    return existingExport;
-  }
-  catch {
-    return undefined;
-  }
-} 
+// Obtain the tileset for an imodel exported from the MES and attach it to the viewer
+async function obtainAndAttachTileset(iModelId: string, accessToken: string, changesetId: string, viewer: Viewer) {
+  const tilesetUrl = await getIModel3dTilesUrl(iModelId, changesetId, imsPrefix, accessToken);
 
-// start a new export
-async function startExport(iModelId: string, accessToken: string, changesetId: string) {
-  console.log("Starting New Export");
- 
-  const requestOptions = {
-      method: "POST",
-      headers: {
-        "Authorization": accessToken,
-        "Accept": "application/vnd.bentley.itwin-platform.v1+json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        iModelId,
-        changesetId,
-        exportType:"CESIUM",
-      }),
-    };
- 
-    const response = await fetch(`https://api.bentley.com/mesh-export/`, requestOptions);
-    const result = JSON.parse(JSON.stringify(await response.json()));
-    return result.export.id;
-}
-
-// get an export specified by its Id
-async function getExport(exportId: string, accessToken: string) {
-  const headers = {
-    Authorization: accessToken,
-    Accept: "application/vnd.bentley.itwin-platform.v1+json",
-  };
- 
-  const url = `https://api.bentley.com/mesh-export/${exportId}`;
-  try {
-    const response = await fetch(url, { headers });
-    const result = JSON.parse(JSON.stringify(await response.json()));
-    return result;
-  } catch (err) {
-    return undefined;
+  if (!tilesetUrl) {
+    throw new Error("Could not get tileset URL");
   }
-}
-
-// obtain the tileset for an imodel exported from the MES and attach it to the viewer
-async function obtainAndAttachTileset(imodelId: string, accessToken: string, changesetId: string, viewer: Viewer) {
-  let tilesetUrl;
-  const start = Date.now();
-  
-  const existingExport = await getExistingExport(imodelId, accessToken, changesetId);
-  if (existingExport) {
-    console.log("Existing Export Found");
-    tilesetUrl = existingExport._links.mesh.href;
-  }
-  else {
-    console.log("No Existing Export Found");
-    const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
-    const exportId = await startExport(imodelId, accessToken, changesetId);
  
-    let result = await getExport(exportId, accessToken);
-    let status = result.export.status;
-    while (status !== "Complete") {
-      await delay(3000);
-      result = await getExport(exportId, accessToken);
-      status = result.export.status;
-      console.log("Export is " + status);
- 
-      if (Date.now() - start > 300_000) {
-        throw new Error("Export did not complete in time.");
-      }
-    }
-    tilesetUrl = result.export._links.mesh.href;
-  }
-
-  const splitStr = tilesetUrl.split("?");
-  tilesetUrl = splitStr[0] + "/tileset.json?" + splitStr[1];
- 
-  const tileset = await Cesium3DTileset.fromUrl(tilesetUrl);
+  const tileset = await Cesium3DTileset.fromUrl(tilesetUrl.toString());
   viewer.scene.primitives.add(tileset);
   viewer.zoomTo(tileset);
-  console.log("Finished in " + ((Date.now() - start) / 1000).toString() + " seconds");
 }
 
 async function main() {
   const viewer = setupViewer();
   const accessToken = await signIn();
-  await obtainAndAttachTileset(imodelId, accessToken, changesetId, viewer);
+  await obtainAndAttachTileset(iModelId, accessToken, changesetId, viewer);
 }
 
 main();

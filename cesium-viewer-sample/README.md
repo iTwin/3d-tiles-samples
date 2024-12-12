@@ -1,6 +1,6 @@
 # Mesh Export Service - Cesium Viewer Integration Sample
 
-This sample is an example of integrating the Mesh Export Service into a stand alone Cesium viewer. The goal of the sample is to view an iModel exported from the Mesh Export Service as a Cesium 3D Tiles tileset in the Cesium viewer. This demo runs with Vite and opens a local host server which displays the Cesium viewer and your iModel.
+This is a sample that demonstrates how to view a tileset in the [Cesium 3D Tiles](https://github.com/CesiumGS/3d-tiles) format from the iTwin platform [Mesh Export API](https://developer.bentley.com/apis/mesh-export/overview/) in a CesiumJS viewer. This demo runs with Vite and opens a localhost server which displays the Cesium viewer and your iModel.
 
 ## Set Up
 
@@ -30,7 +30,7 @@ You will need to obtain the iModel Id for the iModel you wish to view. You must 
 - You will be taken into your new iTwin. Under "iModels", click "New"
 - Enter a name for your iModel and select "Bentley Sample" under "Create iModel from"
 - Click on the drop down menu under "Bentley iModel template" and pick any sample model from the list
-    - Note: Due to the model's size, it is advised not to pick "Stadium" for this step
+  - Note: Due to the model's size, it is advised not to pick "Stadium" for this step
 - Click "Save"
 - You will be taken back to your new itwin page, and your iModel should say "In Progress"
 
@@ -41,41 +41,34 @@ You will need to obtain the iModel Id for the iModel you wish to view. You must 
 - Click the three dots icon in the bottom right of your iModel, and then click "Copy Ids"
 - An iTwin Id and iModel Id have now been copied to your clipboard. You only need to save the iModel Id, which is labeled "IMJS_IMODEL_ID"
 - Now, back in your `.env` file, create an environment variable named `VITE_IMODEL_ID`, and assign your acquired imodel id to it
-    - The next line of your .env file should now look like this: `VITE_IMODEL_ID = "your-imodel-id-here"`
+  - The next line of your .env file should now look like this: `VITE_IMODEL_ID = "your-imodel-id-here"`
 - If you have a changeset id to specify, create an environment variable named `VITE_CHANGESET_ID` and assign the changeset id to it
-    - This line of your .env file would now look like this: `VITE_CHANGESET_ID = "your-changeset-id-here"`
+  - This line of your .env file would now look like this: `VITE_CHANGESET_ID = "your-changeset-id-here"`
 
 ### 3) Obtaining the Client Id
 
 - Navigate to [this page](https://developer.bentley.com/tutorials/register-and-modify-application/) which will show you how to register an application with Bentley.
 - Follow the instructions on this page to register your application, with these important notes:
-    - When prompted, choose to create a Single Page Application
-    - When prompted, add this url as a "Redirect URI": http://localhost:5173
+  - When prompted, choose to create a Single Page Application
+  - When prompted, add this url as a "Redirect URI": http://localhost:5173
 - Once the app is registered, copy the app's Client Id
 - Now, back in your `.env` file, create an environment variable named `VITE_AUTH_CLIENT_ID`, and assign your acquired client id to it
-    - The next line of your .env file should now look like this: `VITE_AUTH_CLIENT_ID = "your-client-id-here"`
+  - The next line of your .env file should now look like this: `VITE_AUTH_CLIENT_ID = "your-client-id-here"`
 
 ## Running the Sample
 
-To run the sample: 
-- In a command prompt navigate to the sample's root directory
+- Navigate to the sample's root directory
 - run `npm run build`
 - run `npm run dev`
 - Navigate in your browser to https://localhost:5173
 
 ## What the Sample Does
 
-As soon as you navigate to the local host url, the sample will start. In the developer console, the sample will output each step and then how long it took the sample to complete. The sample will:
+The sample will:
 
 - First, attempt to sign in using Bentley's authentication process
-    - You might need to follow some prompts here to allow access to the Mesh Export Service
-- Once authentication is successful, check if a Cesium export already exists for the iModel you provided
-- If an export exists, obtain the url to the tileset for the existing export
-- If an export does not already exist the demo will:
-    - Start a Cesium export for the iModel you provided using the start-export API
-    - Next, every five seconds, contact the Mesh Export Service and obtain the export's status using the get-export API
-    - Next, once the export is complete, obtain the url to the tileset for the completed export
-- Finally, display this tileset in the viewer using this url
+  - You might need to follow some prompts here to allow access to the Mesh Export API
+- Once authentication is successful, the Cesium viewport will display the iModel's 3D Tiles tileset in the viewer
 
 Screenshot of a tileset after running the sample:
 
