@@ -23,7 +23,7 @@ function setupViewer(): Viewer {
   return viewer;
 }
 
-// sign in using the browser authorization client
+// Sign in using the browser authorization client
 async function signIn(): Promise<any> {
   const redirectUri = window.location.origin;
 
@@ -40,7 +40,7 @@ async function signIn(): Promise<any> {
   return await authClient.getAccessToken();
 }
 
-// obtain the tileset for an imodel exported from the MES and attach it to the viewer
+// Obtain the tileset for an imodel exported from the MES and attach it to the viewer
 async function obtainAndAttachTileset(iModelId: string, accessToken: string, changesetId: string, viewer: Viewer) {
   const tilesetUrl = await getIModel3dTilesUrl(iModelId, changesetId, imsPrefix, accessToken);
 
