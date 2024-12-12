@@ -3,7 +3,7 @@ import { BrowserAuthorizationClient } from "@itwin/browser-authorization";
 import { TilesRenderer } from "3d-tiles-renderer";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { ITwinMeshExportServicePlugin } from "./ITwinMeshExportServicePlugin";
-import { getIModel3dTilesUrl } from "./IModelTiles"; 
+import { getIModel3dTilesUrl } from "./iModelTiles";
 import { createSimpleSky } from "./sky";
 import "./style.css";
 
