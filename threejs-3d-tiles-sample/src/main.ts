@@ -50,7 +50,7 @@ const authClient = new BrowserAuthorizationClient({
 });
 
 await authClient.signInRedirect();
-await authClient.handleSigninCallback();
+authClient.handleSigninCallback();
 
 const iModelId = import.meta.env.VITE_IMODEL_ID;
 const changesetId = import.meta.env.VITE_CHANGESET_ID || "";
