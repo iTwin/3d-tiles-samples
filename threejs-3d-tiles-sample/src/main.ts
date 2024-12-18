@@ -1,3 +1,7 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
 import * as THREE from "three";
 import { BrowserAuthorizationClient } from "@itwin/browser-authorization";
 import { TilesRenderer } from "3d-tiles-renderer";

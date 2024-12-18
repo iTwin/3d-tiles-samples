@@ -1,4 +1,8 @@
-import  { Ion, ITwinData, ITwinPlatform, Viewer } from "cesium";
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+import { Ion, ITwinData, ITwinPlatform, Viewer } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import { BrowserAuthorizationClient } from "@itwin/browser-authorization";
 import "./style.css";
