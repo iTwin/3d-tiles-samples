@@ -37,7 +37,7 @@ async function signIn(): Promise<any> {
   });
 
   await authClient.signInRedirect();
-  authClient.handleSigninCallback();
+  await authClient.handleSigninCallback();
   return authClient.getAccessToken();
 }
 
