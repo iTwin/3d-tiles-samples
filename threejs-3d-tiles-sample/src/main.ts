@@ -1,9 +1,13 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
 import * as THREE from "three";
 import { BrowserAuthorizationClient } from "@itwin/browser-authorization";
 import { TilesRenderer } from "3d-tiles-renderer";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { ITwinMeshExportServicePlugin } from "./ITwinMeshExportServicePlugin";
-import { getIModel3dTilesUrl } from "./iModelTiles";
+import { getIModel3dTilesUrl } from "./IModelTiles";
 import { createSimpleSky } from "./sky";
 import "./style.css";
 
@@ -45,7 +49,7 @@ const authClient = new BrowserAuthorizationClient({
   responseType: "code"
 });
 
-authClient.signInRedirect();
+await authClient.signInRedirect();
 await authClient.handleSigninCallback();
 
 const iModelId = import.meta.env.VITE_IMODEL_ID;

@@ -4,11 +4,14 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build",
+    "dev": "vite",
+    "lint": "eslint \"./src/**/*.ts\" 1>&2",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@itwin/eslint-plugin": "^5.0.0",
+    "eslint": "^9.13.0",
     "typescript": "^5.5.3",
     "vite": "^5.4.1"
   },

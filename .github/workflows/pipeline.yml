@@ -1,0 +1,45 @@
+name: Build and lint
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - 'main'
+  pull_request:
+
+jobs:
+  cesium_sample:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
+        working-directory: ./cesium-viewer-sample
+
+      - run: npm run build
+        working-directory: ./cesium-viewer-sample
+
+      - run: npm run lint
+        working-directory: ./cesium-viewer-sample
+
+  three_sample:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
+        working-directory: ./threejs-3d-tiles-sample
+
+      - run: npm run build
+        working-directory: ./threejs-3d-tiles-sample
+
+      - run: npm run lint
+        working-directory: ./threejs-3d-tiles-sample
