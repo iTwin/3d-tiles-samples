@@ -36,10 +36,10 @@ jobs:
           node-version: 20
 
       - run: npm install
-        working-directory: ./three-viewer-sample
+        working-directory: ./threejs-3d-tiles-sample
 
       - run: npm run build
-        working-directory: ./three-viewer-sample
+        working-directory: ./threejs-3d-tiles-sample
 
       - run: npm run lint
-        working-directory: ./three-viewer-sample
+        working-directory: ./threejs-3d-tiles-sample
