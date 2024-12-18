@@ -1,0 +1,28 @@
+name: Build and lint the samples
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - 'main'
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
+        working-directory: ./cesium-viewer-sample
+
+      - run: npm run build
+        working-directory: ./cesium-viewer-sample
+
+      - run: npm run lint
+        working-directory: ./cesium-viewer-sample

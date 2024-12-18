@@ -1,10 +1,12 @@
 export async function getIModel3dTilesUrl(iModelId: string, changesetId: string, imsPrefix: string, accessToken: string): Promise<URL | undefined> {
+  /* eslint-disable @typescript-eslint/naming-convention */
   const headers = {
     "Authorization": accessToken,
     "Accept": "application/vnd.bentley.itwin-platform.v1+json",
     "Content-Type": "application/json",
     "Prefer": "return=representation"
   };
+  /* eslint-enable */
 
   let url = `https://${imsPrefix}api.bentley.com/mesh-export/?iModelId=${iModelId}&exportType=3DTILES`;
   if (changesetId) {
@@ -20,7 +22,7 @@ export async function getIModel3dTilesUrl(iModelId: string, changesetId: string,
   const exportItem = responseJson.exports.find((exp: any) => exp.request.exportType === "3DTILES");
   if (exportItem) {
     const tilesetUrl = new URL(exportItem._links.mesh.href);
-    tilesetUrl.pathname = tilesetUrl.pathname + "/tileset.json";
+    tilesetUrl.pathname = `${tilesetUrl.pathname}/tileset.json`;
     return tilesetUrl;
   }
 }
