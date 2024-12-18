@@ -8,39 +8,8 @@ on:
   pull_request:
 
 jobs:
-  on:
-    push:
-      paths:
-        - 'cesium-viewer-sample/**'
-  build:
+  build_cesium_sample:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - run: npm install
-        working-directory: ./cesium-viewer-sample
-
-      - run: npm run build
-        working-directory: ./cesium-viewer-sample
-
-      - run: npm run lint
-        working-directory: ./cesium-viewer-sample
-
-jobs:
-  on:
-    push:
-      paths:
-        - 'threejs-3d-tiles-sample/**'
-  build:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./threejs-3d-tiles-sample
     steps:
       - uses: actions/checkout@v4
 
@@ -49,5 +18,28 @@ jobs:
           node-version: 20
 
       - run: npm install
+        working-directory: ./cesium-viewer-sample
+
       - run: npm run build
+        working-directory: ./cesium-viewer-sample
+
       - run: npm run lint
+        working-directory: ./cesium-viewer-sample
+
+  build_three_sample:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm install
+        working-directory: ./three-viewer-sample
+
+      - run: npm run build
+        working-directory: ./three-viewer-sample
+
+      - run: npm run lint
+        working-directory: ./three-viewer-sample
