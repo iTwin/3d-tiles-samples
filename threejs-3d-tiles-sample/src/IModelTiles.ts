@@ -23,7 +23,8 @@ export async function getIModel3dTilesUrl(iModelId: string, changesetId: string,
     throw new Error(responseJson.error);
   }
 
-  const exportItem = responseJson.exports.find((exp: any) => exp.request.exportType === "3DTILES");
+  // Get the first export from the response, if it exists
+  const exportItem = responseJson.exports.shift();
   if (exportItem) {
     const tilesetUrl = new URL(exportItem._links.mesh.href);
     tilesetUrl.pathname = `${tilesetUrl.pathname}/tileset.json`;

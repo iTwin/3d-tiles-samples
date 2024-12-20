@@ -132,7 +132,8 @@ export async function getIModel3dTilesUrl(iModelId: string, changesetId: string,
     throw new Error(responseJson.error);
   }
 
-  const exportItem = responseJson.exports.find((exp: any) => exp.request.exportType === "3DTILES");
+  // Get the first export from the response, if it exists
+  const exportItem = responseJson.exports.shift();
   if (exportItem) {
     const tilesetUrl = new URL(exportItem._links.mesh.href);
     tilesetUrl.pathname = tilesetUrl.pathname + "/tileset.json";
@@ -141,7 +142,7 @@ export async function getIModel3dTilesUrl(iModelId: string, changesetId: string,
 }
 ```
 
-This function uses the [get exports](https://developer.bentley.com/apis/mesh-export/operations/get-exports/) endpoint to get a list of exports. Since you need a 3D Tiles export of your iModel, it then uses `find()` to get the first export from the list that has the type `3DTILES`. The found export, `exportItem`, contains a `_links.mesh.href` property which is the URL to the base path in Azure Storage that contains the tileset.json and its tiles. It's necessary to add the string "tileset.json" to the URL pathname to form it correctly.
+This function uses the [get exports](https://developer.bentley.com/apis/mesh-export/operations/get-exports/) endpoint to get a list of exports in the 3D Tiles format. The export `exportItem`, contains a `_links.mesh.href` property which is the URL to the base path in Azure Storage that contains the tileset.json and its tiles. It's necessary to add the string "tileset.json" to the URL pathname to form it correctly.
 
 Now to call this function in `main.ts`:
 
