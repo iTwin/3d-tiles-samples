@@ -36,7 +36,7 @@ async function signIn(): Promise<any> {
     responseType: "code"
   });
 
-  await authClient.signInRedirect();
+  void authClient.signInRedirect();
   await authClient.handleSigninCallback();
   return authClient.getAccessToken();
 }
