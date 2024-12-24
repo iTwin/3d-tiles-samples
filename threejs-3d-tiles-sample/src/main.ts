@@ -49,7 +49,7 @@ const authClient = new BrowserAuthorizationClient({
   responseType: "code"
 });
 
-await authClient.signInRedirect();
+void authClient.signInRedirect();
 await authClient.handleSigninCallback();
 
 const iModelId = import.meta.env.VITE_IMODEL_ID;
