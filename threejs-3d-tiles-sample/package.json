@@ -13,7 +13,7 @@
     "@itwin/eslint-plugin": "^5.0.0",
     "eslint": "^9.13.0",
     "typescript": "^5.5.3",
-    "vite": "^5.4.1"
+    "vite": "^5.4.12"
   },
   "dependencies": {
     "@itwin/browser-authorization": "^1.1.2",
