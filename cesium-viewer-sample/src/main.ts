@@ -9,7 +9,7 @@ import "./style.css";
 
 const ionToken = import.meta.env.VITE_ION_TOKEN;
 const iModelId = import.meta.env.VITE_IMODEL_ID;
-const clientId = import.meta.env.VITE_AUTH_CLIENT_ID;
+const clientId = import.meta.env.VITE_CLIENT_ID;
 
 if (!ionToken || !iModelId || !clientId) {
   throw new Error("Missing required environment variables");
@@ -44,7 +44,7 @@ async function signIn(): Promise<any> {
 async function main() {
   const viewer = setupViewer();
   const accessToken = await signIn();
-  ITwinPlatform.defaultAccessToken = accessToken.split(" ")[1];
+  ITwinPlatform.defaultAccessToken = accessToken.replace("Bearer ", "");
 
   const tileset = await ITwinData.createTilesetFromIModelId(iModelId);
   viewer.scene.primitives.add(tileset);

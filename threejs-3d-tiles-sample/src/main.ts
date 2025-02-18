@@ -53,10 +53,9 @@ void authClient.signInRedirect();
 await authClient.handleSigninCallback();
 
 const iModelId = import.meta.env.VITE_IMODEL_ID;
-const changesetId = import.meta.env.VITE_CHANGESET_ID || "";
 
 const accessToken = await authClient.getAccessToken();
-const tilesetUrl = await getIModel3dTilesUrl(iModelId, changesetId, imsPrefix, accessToken);
+const tilesetUrl = await getIModel3dTilesUrl(iModelId, imsPrefix, accessToken);
 
 if (!tilesetUrl) {
   throw new Error("Could not get tileset URL");
