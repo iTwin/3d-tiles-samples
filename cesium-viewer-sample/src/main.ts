@@ -2,7 +2,7 @@
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
-import { Ion, ITwinData, ITwinPlatform, Viewer } from "cesium";
+import { Cesium3DTileset, Ion, ITwinData, ITwinPlatform, Viewer } from "cesium";
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import { BrowserAuthorizationClient } from "@itwin/browser-authorization";
 import "./style.css";
@@ -46,7 +46,11 @@ async function main() {
   const accessToken = await signIn();
   ITwinPlatform.defaultAccessToken = accessToken.split(" ")[1];
 
-  const tileset = await ITwinData.createTilesetFromIModelId(iModelId);
+  // const tileset = await ITwinData.createTilesetFromIModelId(iModelId);
+  // const url = "http://localhost:8080/test/full_model/checkpoint0.bim-tiles/tileset.json";
+  const url = "http://localhost:8080/test/metro/Metrostation.bim-tiles/tileset.json";
+  const tileset = await Cesium3DTileset.fromUrl(url);
+
   viewer.scene.primitives.add(tileset);
   if (tileset)
     await viewer.zoomTo(tileset);
