@@ -16,7 +16,7 @@ if (!ionToken || !iModelId || !clientId) {
   throw new Error("Missing required environment variables");
 }
 
-// Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+// Initialize the Cesium Viewer in the HTML element with the cesiumContainer ID.
 function setupViewer(): Viewer {
   Ion.defaultAccessToken = ionToken;
   const viewer = new Viewer("cesiumContainer");
