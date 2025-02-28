@@ -2,7 +2,7 @@
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
-export async function getIModel3dTilesUrl(iModelId: string, changesetId: string, imsPrefix: string, accessToken: string): Promise<URL | undefined> {
+export async function getIModel3dTilesUrl(iModelId: string, imsPrefix: string, accessToken: string): Promise<URL | undefined> {
   /* eslint-disable @typescript-eslint/naming-convention */
   const headers = {
     "Authorization": accessToken,
@@ -12,10 +12,7 @@ export async function getIModel3dTilesUrl(iModelId: string, changesetId: string,
   };
   /* eslint-enable */
 
-  let url = `https://${imsPrefix}api.bentley.com/mesh-export/?iModelId=${iModelId}&exportType=3DTILES`;
-  if (changesetId) {
-    url += `&changesetId=${changesetId}`;
-  }
+  const url = `https://${imsPrefix}api.bentley.com/mesh-export/?iModelId=${iModelId}&exportType=3DTILES`;
 
   const response = await fetch(url, { headers });
   const responseJson = await response.json();
