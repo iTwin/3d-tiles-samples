@@ -46,6 +46,7 @@ async function main() {
   const viewer = setupViewer();
   const accessToken = await signIn();
   ITwinPlatform.defaultAccessToken = accessToken.replace("Bearer ", "");
+  ITwinPlatform.apiEndpoint = `https://${imsPrefix}api.bentley.com/`;
 
   const tileset = await ITwinData.createTilesetFromIModelId(iModelId);
   viewer.scene.primitives.add(tileset);

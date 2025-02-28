@@ -15,5 +15,5 @@ In the root directory:
 In a .env file in the root directory:
 
 - `VITE_CLIENT_ID` - Client ID needed to sign in with Bentley IMS (required)
-- `VITE_IMS_PREFIX` - Bentley IMS authority prefix (should be "dev-", "qa-", or "") (optional, default is "", meaning iModels in the production environment)
+- `VITE_IMS_PREFIX` - Bentley IMS authority prefix (should be "qa-", or "") (optional, default is "", meaning iModels in the production environment)
 - `VITE_IMODEL_ID` - iModel ID of the iModel to view (required)
