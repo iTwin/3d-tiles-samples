@@ -1,75 +1,19 @@
-# Mesh Export Service - Cesium Viewer Integration Sample
+# cesium-viewer-sample
 
-This is a sample that demonstrates how to view a tileset in the [Cesium 3D Tiles](https://github.com/CesiumGS/3d-tiles) format from the iTwin platform [Mesh Export API](https://developer.bentley.com/apis/mesh-export/overview/) in a CesiumJS viewer. This demo runs with Vite and opens a localhost server which displays the Cesium viewer and your iModel.
+This is a sample that demonstrates how to view a tileset in the [Cesium 3D Tiles](https://github.com/CesiumGS/3d-tiles) format from the iTwin platform [Mesh Export API](https://developer.bentley.com/apis/mesh-export/overview/) in a CesiumJS viewer. This demo runs with Vite and opens a localhost server which displays the Cesium viewer and your iModel. You can also view [this detailed tutorial](https://developer.bentley.com/tutorials/viewing-an-imodel-cesiumjs/) on how to create the project.
 
-## Set Up
+## Steps to run
 
-To run the sample, you will first need to pull the source code and set up your environment. You will need a Cesium Ion Token, an iModel Id associated with the imodel you wish to view, and a Client Id for a Single Page Application created on [developer.bentley.com](https://developer.bentley.com). Optionally, you can also specify a changeset Id to view a specific changeset of a specific iModel.
+In the root directory:
 
-### 1) Obtaining the Cesium Ion Token
+- `npm install`
+- `npm run build`
+- `npm run dev`
 
-You will need a free Cesium Ion account to obtain this access token.
+## Environment variables
 
-- First, follow the instructions on [this page](https://cesium.com/learn/ion/cesium-ion-access-tokens/) to learn how to create and obtain a Cesium Ion Access Token
-- Next, in the sample's root directory, create a file named `.env`
-- Create an environment variable named `VITE_ION_TOKEN`, and assign your acquired access token to it
-    - The first line of your .env file should now look like this: `VITE_ION_TOKEN = "your-ion-token-here"`
+In a .env file in the root directory:
 
-### 2) Obtaining the iModel Id
-
-You will need to obtain the iModel Id for the iModel you wish to view. You must use an iModel which you have access to at developer.bentley.com.
-
-- First, sign in to [developer.bentley.com](https://developer.bentley.com)
-- Click on your profile in the top right of the page, and click "My iTwins"
-- If you already have access to an iTwin containing an iModel you would like to view, you can skip to step 1b
-
-#### 2a) Create a New iTwin containing a New iModel
-
-- If you do not already have access to any models, or if you would like to make a new model, click "New"
-- Enter a name for your iTwin, and click "Save"
-- You will be taken into your new iTwin. Under "iModels", click "New"
-- Enter a name for your iModel and select "Bentley Sample" under "Create iModel from"
-- Click on the drop down menu under "Bentley iModel template" and pick any sample model from the list
-  - Note: Due to the model's size, it is advised not to pick "Stadium" for this step
-- Click "Save"
-- You will be taken back to your new itwin page, and your iModel should say "In Progress"
-
-#### 2b) Saving iModel Id
-
-- If you skipped creating a new iTwin and iModel, navigate into the iTwin you wish to use for this sample
-- Find the iModel you wish to use for the demo, if you just created the iModel and it says "In Progress", wait for it to finish
-- Click the three dots icon in the bottom right of your iModel, and then click "Copy Ids"
-- An iTwin Id and iModel Id have now been copied to your clipboard. You only need to save the iModel Id, which is labeled "IMJS_IMODEL_ID"
-- Now, back in your `.env` file, create an environment variable named `VITE_IMODEL_ID`, and assign your acquired imodel id to it
-  - The next line of your .env file should now look like this: `VITE_IMODEL_ID = "your-imodel-id-here"`
-- If you have a changeset id to specify, create an environment variable named `VITE_CHANGESET_ID` and assign the changeset id to it
-  - This line of your .env file would now look like this: `VITE_CHANGESET_ID = "your-changeset-id-here"`
-
-### 3) Obtaining the Client Id
-
-- Navigate to [this page](https://developer.bentley.com/tutorials/register-and-modify-application/) which will show you how to register an application with Bentley.
-- Follow the instructions on this page to register your application, with these important notes:
-  - When prompted, choose to create a Single Page Application
-  - When prompted, add this url as a "Redirect URI": http://localhost:5173
-- Once the app is registered, copy the app's Client Id
-- Now, back in your `.env` file, create an environment variable named `VITE_AUTH_CLIENT_ID`, and assign your acquired client id to it
-  - The next line of your .env file should now look like this: `VITE_AUTH_CLIENT_ID = "your-client-id-here"`
-
-## Running the Sample
-
-- Navigate to the sample's root directory
-- run `npm run build`
-- run `npm run dev`
-- Navigate in your browser to https://localhost:5173
-
-## What the Sample Does
-
-The sample will:
-
-- First, attempt to sign in using Bentley's authentication process
-  - You might need to follow some prompts here to allow access to the Mesh Export API
-- Once authentication is successful, the Cesium viewport will display the iModel's 3D Tiles tileset in the viewer
-
-Screenshot of a tileset after running the sample:
-
-<img src="./public/CesiumViewerScreenshot.png" alt="viewer screenshot" width="900px"/>
+- `VITE_CLIENT_ID` - Client ID needed to sign in with Bentley IMS (required)
+- `VITE_IMS_PREFIX` - Bentley IMS authority prefix (should be "dev-", "qa-", or "") (optional, default is "", meaning iModels in the production environment)
+- `VITE_IMODEL_ID` - iModel ID of the iModel to view (required)

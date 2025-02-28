@@ -39,7 +39,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // ********** Get tileset url from the Mesh Export Service **********
 const redirectUri = window.location.origin + window.location.pathname;
-const imsPrefix = import.meta.env.VITE_IMS_PREFIX ?? "qa-";
+const imsPrefix = import.meta.env.VITE_IMS_PREFIX ?? "";
 
 const authClient = new BrowserAuthorizationClient({
   authority: `https://${imsPrefix}ims.bentley.com`,

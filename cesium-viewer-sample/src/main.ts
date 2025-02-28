@@ -10,6 +10,7 @@ import "./style.css";
 const ionToken = import.meta.env.VITE_ION_TOKEN;
 const iModelId = import.meta.env.VITE_IMODEL_ID;
 const clientId = import.meta.env.VITE_CLIENT_ID;
+const imsPrefix = import.meta.env.VITE_IMS_PREFIX ?? "";
 
 if (!ionToken || !iModelId || !clientId) {
   throw new Error("Missing required environment variables");
@@ -29,7 +30,7 @@ async function signIn(): Promise<any> {
   const redirectUri = window.location.origin;
 
   const authClient = new BrowserAuthorizationClient({
-    authority: "https://ims.bentley.com",
+    authority: `https://${imsPrefix}ims.bentley.com`,
     clientId,
     scope: "itwin-platform",
     redirectUri,
