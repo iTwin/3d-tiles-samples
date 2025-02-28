@@ -9,13 +9,14 @@ import "./style.css";
 
 const ionToken = import.meta.env.VITE_ION_TOKEN;
 const iModelId = import.meta.env.VITE_IMODEL_ID;
-const clientId = import.meta.env.VITE_AUTH_CLIENT_ID;
+const clientId = import.meta.env.VITE_CLIENT_ID;
+const imsPrefix = import.meta.env.VITE_IMS_PREFIX ?? "";
 
 if (!ionToken || !iModelId || !clientId) {
   throw new Error("Missing required environment variables");
 }
 
-// Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
+// Initialize the Cesium Viewer in the HTML element with the cesiumContainer ID.
 function setupViewer(): Viewer {
   Ion.defaultAccessToken = ionToken;
   const viewer = new Viewer("cesiumContainer");
@@ -29,7 +30,7 @@ async function signIn(): Promise<any> {
   const redirectUri = window.location.origin;
 
   const authClient = new BrowserAuthorizationClient({
-    authority: "https://ims.bentley.com",
+    authority: `https://${imsPrefix}ims.bentley.com`,
     clientId,
     scope: "itwin-platform",
     redirectUri,
@@ -44,7 +45,8 @@ async function signIn(): Promise<any> {
 async function main() {
   const viewer = setupViewer();
   const accessToken = await signIn();
-  ITwinPlatform.defaultAccessToken = accessToken.split(" ")[1];
+  ITwinPlatform.defaultAccessToken = accessToken.replace("Bearer ", "");
+  ITwinPlatform.apiEndpoint = `https://${imsPrefix}api.bentley.com/`;
 
   const tileset = await ITwinData.createTilesetFromIModelId(iModelId);
   viewer.scene.primitives.add(tileset);
