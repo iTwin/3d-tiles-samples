@@ -4,3 +4,5 @@ This repository contains samples and tutorials for how to use the [Mesh Export S
 
 - [Viewing an iModel as 3D Tiles in CesiumJS](cesium-viewer-sample/README.md)
 - [Viewing an iModel as 3D Tiles in Three.js](threejs-3d-tiles-sample/README.md)
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute or where to ask questions.

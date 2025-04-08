@@ -14,6 +14,7 @@ In the root directory:
 
 In a .env file in the root directory:
 
-- `VITE_CLIENT_ID` - Client ID needed to sign in with Bentley IMS (required)
+- `VITE_CLIENT_ID` - Client ID needed to sign in with Bentley IMS (required). This client ID should be for a single page application, with `http://localhost:5173/` as a redirect URI.
 - `VITE_IMS_PREFIX` - Bentley IMS authority prefix (should be "qa-", or "") (optional, default is "", meaning iModels in the production environment)
 - `VITE_IMODEL_ID` - iModel ID of the iModel to view (required)
+- `VITE_ION_TOKEN` - Cesium Ion access token, obtained with a free account through [this guide](https://cesium.com/learn/cesiumjs-learn/cesiumjs-quickstart/#step-1-create-an-account-and-get-a-token) (required)
